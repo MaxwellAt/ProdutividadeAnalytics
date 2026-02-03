@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="card">
+    <h2>Nova tarefa</h2>
+    <p>Preencha os dados para registrar uma nova atividade.</p>
+
+    <form method="post" class="form-grid">
+      {% csrf_token %}
+      <div>
+        <label for="id_title">Título</label>
+        {{ form.title }}
+      </div>
+      <div>
+        <label for="id_description">Descrição</label>
+        {{ form.description }}
+      </div>
+      <div>
+        <label for="id_completed">Status</label>
+        {{ form.completed }}
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">Salvar</button>
+        <a class="btn btn-secondary" href="/">Voltar</a>
+      </div>
+    </form>
+  </section>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="card">
+    <h2>Visão geral</h2>
+    <div class="grid grid-2">
+      <div>
+        <p>Organize tarefas, acompanhe progresso e gere dados úteis para análise.</p>
+      </div>
+      <div>
+        <span class="badge">{{ tasks|length }} tarefas cadastradas</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Lista de tarefas</h2>
+    <div class="task-list">
+      {% for task in tasks %}
+        <div class="task-item">
+          <div>
+            <span class="badge {% if task.completed %}done{% endif %}">
+              {% if task.completed %}Concluída{% else %}Em andamento{% endif %}
+            </span>
+            <h3>{{ task.title }}</h3>
+            <p>{{ task.description }}</p>
+          </div>
+          <div class="task-actions">
+            <a class="btn btn-secondary" href="./tasks_update/{{ task.id }}">Editar</a>
+            <a class="btn btn-danger" href="./tasks_delete/{{ task.id }}">Excluir</a>
+          </div>
+        </div>
+      {% empty %}
+        <p>Nenhuma tarefa cadastrada ainda. Crie a primeira!</p>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

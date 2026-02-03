@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema de Gestão e Análise de Produtividade</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'dados_produtividade/styles.css' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="{% static 'dados_produtividade/favicon.svg' %}" type="image/svg+xml" />
+    <link rel="icon" href="{% static 'dados_produtividade/favicon-32x32.png' %}" sizes="32x32" type="image/png" />
+    <link rel="icon" href="{% static 'dados_produtividade/favicon-16x16.png' %}" sizes="16x16" type="image/png" />
+    <link rel="apple-touch-icon" href="{% static 'dados_produtividade/favicon-180x180.png' %}" sizes="180x180" />
+    <link rel="manifest" href="{% static 'dados_produtividade/site.webmanifest' %}" />
+    <link rel="shortcut icon" href="{% static 'dados_produtividade/favicon.ico' %}" type="image/x-icon" />
+    <meta name="theme-color" content="#4f46e5" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <div>
+          <p class="eyebrow">Produtividade</p>
+          <h1>Sistema de Gestão e Análise de Dados de Produtividade</h1>
+        </div>
+        <nav class="actions">
+          <button class="btn btn-ghost" id="theme-toggle" type="button">
+            Alternar tema
+          </button>
+          <a class="btn btn-primary" href="/">Dashboard</a>
+          <a class="btn btn-secondary" href="/tasks/">Nova tarefa</a>
+        </nav>
+      </header>
+
+      <main class="content">
+        {% block content %}{% endblock %}
+      </main>
+
+      <footer class="footer">
+        <span>Dados atualizados em tempo real pelo sistema.</span>
+      </footer>
+    </div>
+    <script>
+      const root = document.documentElement;
+      const toggle = document.getElementById("theme-toggle");
+
+      const applyTheme = (theme) => {
+        root.classList.remove("dark", "light");
+        if (theme === "dark") {
+          root.classList.add("dark");
+        }
+        if (theme === "light") {
+          root.classList.add("light");
+        }
+        toggle.textContent = theme === "dark" ? "Tema claro" : "Tema escuro";
+      };
+
+      const storedTheme = localStorage.getItem("theme");
+      if (storedTheme) {
+        applyTheme(storedTheme);
+      } else {
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        applyTheme(prefersDark ? "dark" : "light");
+      }
+
+      toggle.addEventListener("click", () => {
+        const isDark = root.classList.contains("dark");
+        const nextTheme = isDark ? "light" : "dark";
+        localStorage.setItem("theme", nextTheme);
+        applyTheme(nextTheme);
+      });
+    </script>
+  </body>
+</html>

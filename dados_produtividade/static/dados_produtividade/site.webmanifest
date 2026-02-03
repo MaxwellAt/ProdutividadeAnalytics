@@ -1,0 +1,19 @@
+{
+  "name": "Sistema de Gestão e Análise de Dados de Produtividade",
+  "short_name": "Produtividade",
+  "icons": [
+    {
+      "src": "/static/dados_produtividade/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/dados_produtividade/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#4f46e5",
+  "background_color": "#f4f7fb",
+  "display": "standalone"
+}

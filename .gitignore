@@ -1,1 +1,31 @@
 /TestePy
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtualenv
+.venv/
+venv/
+env/
+
+# Django
+db.sqlite3
+*.sqlite3
+*.log
+
+# Ambiente
+.env
+.env.*
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Favicons gerados
+dados_produtividade/static/dados_produtividade/favicon-*.png
+dados_produtividade/static/dados_produtividade/favicon.ico

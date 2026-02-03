@@ -1,6 +1,6 @@
-# Administrador_De_Tarefas
+# ProdutividadeAnalytics
 
-Este é um projeto desenvolvido em Django para gerenciar tarefas. Com este aplicativo web, é possível adicionar, editar, remover e visualizar tarefas de forma fácil e organizada.
+Sistema de Gestão e Análise de Dados de Produtividade.
 
 ## Funcionalidades
 
@@ -10,19 +10,27 @@ As principais funcionalidades deste aplicativo são:
 - Editar uma tarefa existente;
 - Remover uma tarefa;
 - Visualizar todas as tarefas cadastradas.
+- Gerar estatísticas de produtividade (via análise em dados).
 
 ## Como utilizar
 
 Para utilizar este aplicativo, siga os passos abaixo:
 
 1. Clone este repositório em seu computador:
->git clone https://github.com/MaxwellAt/Administrador_De_Tarefas.git
+>git clone https://github.com/MaxwellAt/ProdutividadeAnalytics.git
 
 2. Acesse a pasta do projeto:
->cd Administrador_De_Tarefas.git
+>cd ProdutividadeAnalytics
 
 3. Instale as dependências:
->pip install -r requirements.txt
+>pip install -r requeriments.txt
+
+### Configuração automatizada do ambiente
+
+Se preferir, use o script de setup:
+
+>chmod +x scripts/setup_env.sh
+>./scripts/setup_env.sh
 
 4. Crie o banco de dados:
 >python manage.py migrate
@@ -33,6 +41,12 @@ Para utilizar este aplicativo, siga os passos abaixo:
 
 6. Acesse o aplicativo no seu navegador, através do endereço http://localhost:8000/.
 
+## Análise de produtividade
+
+Para gerar estatísticas a partir das tarefas cadastradas:
+
+>python analise_produtividade.py
+
 ## Tecnologias utilizadas
 
 Este projeto foi desenvolvido com as seguintes tecnologias:
@@ -40,6 +54,7 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 - Python
 - Django
 - HTML
+- Pandas
 
 ##
 <div align="center">
