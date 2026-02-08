@@ -2,7 +2,8 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-from dados_produtividade.models import Task, User
+from django.contrib.auth.models import User
+from dados_produtividade.models import Task
 
 @pytest.mark.django_db
 class TestTaskAPI:
