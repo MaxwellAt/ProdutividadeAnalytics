@@ -15,8 +15,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install python dependencies
-COPY requirements.txt /app/
-RUN pip install --upgrade pip && pip install -r requirements.txt
+COPY requirements/ /app/requirements/
+RUN pip install --upgrade pip && pip install -r requirements/local.txt
 
 # Copy project
 COPY . /app/

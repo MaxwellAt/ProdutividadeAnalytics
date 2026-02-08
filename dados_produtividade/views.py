@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 import pandas as pd
 from django.utils.dateparse import parse_datetime
 
-from .models import Task, ActivityLog
+from .models import Task, ActivityLog, Source
 from .forms import TaskForm, UploadFileForm
 from .services.analytics import AnalyticsService
 
 
+@login_required
 def dashboard(request):
     context = {}
     try:
@@ -22,11 +24,13 @@ def dashboard(request):
     return render(request, 'dashboard.html', context)
 
 
+@login_required
 def task_list(request):
     tasks = Task.objects.all()
     return render(request, 'task_list.html', {'tasks': tasks})
 
 
+@login_required
 def task_create(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -38,12 +42,14 @@ def task_create(request):
     return render(request, 'task_form.html', {'form': form})
 
 
+@login_required
 def task_delete(request, id):
     task = Task.objects.get(id=id)
     task.delete()
     return redirect('../')
 
 
+@login_required
 def task_update(request, id):
     task = Task.objects.get(id=id)
     if request.method == 'POST':
@@ -55,6 +61,7 @@ def task_update(request, id):
         form = TaskForm(instance=task)
     return render(request, 'task_form.html', {'form': form})
 
+@login_required
 def upload_csv(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
@@ -69,6 +76,9 @@ def upload_csv(request):
                     messages.error(request, f"O arquivo CSV deve conter as colunas: {', '.join(required_cols)}")
                     return render(request, 'upload_csv.html', {'form': form})
 
+                # Get or Create Source for CSV
+                source, _ = Source.objects.get_or_create(name="CSV Import")
+
                 count = 0
                 for _, row in df.iterrows():
                     start = pd.to_datetime(row['Start Time'])
@@ -77,7 +87,8 @@ def upload_csv(request):
                     ActivityLog.objects.create(
                         start_time=start,
                         end_time=end,
-                        description=row['Description']
+                        description=row['Description'],
+                        source=source
                     )
                     count += 1
                 

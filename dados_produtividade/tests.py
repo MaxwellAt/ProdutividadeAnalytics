@@ -1,23 +1,4 @@
-from __future__ import annotations
-
-import pandas as pd
-from django.test import TestCase
-
-from dados_produtividade.models import Task
-from analise_produtividade import media_tempo_conclusao, tarefas_por_dia
-
-
-class TaskModelTests(TestCase):
-    def test_created_at_preenchido_ao_criar(self):
-        task = Task.objects.create(title="T1", description="desc", completed=False)
-        self.assertIsNotNone(task.created_at)
-        self.assertIsNone(task.completed_at)
-
-    def test_completed_at_ao_concluir_e_limpar(self):
-        task = Task.objects.create(title="T2", description="desc", completed=False)
-
-        task.completed = True
-        task.save()
+# Tests have been moved to the tests/ directory.
         self.assertIsNotNone(task.completed_at)
 
         task.completed = False

@@ -4,6 +4,7 @@ psycopg2-binary
 plotly
 django-environ
 python-dotenv
-pytest
-pytest-django
+djangorestframework
+django-filter
+drf-yasg
 
