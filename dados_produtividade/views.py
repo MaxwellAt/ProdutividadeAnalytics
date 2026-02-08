@@ -7,6 +7,7 @@ from django.utils.dateparse import parse_datetime
 from .models import Task, ActivityLog, Source
 from .forms import TaskForm, UploadFileForm
 from .services.analytics import AnalyticsService
+from .services.task_service import TaskService
 
 
 @login_required
@@ -26,7 +27,7 @@ def dashboard(request):
 
 @login_required
 def task_list(request):
-    tasks = Task.objects.all()
+    tasks = TaskService.get_all_tasks()
     return render(request, 'task_list.html', {'tasks': tasks})
 
 
@@ -35,7 +36,17 @@ def task_create(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
-            form.save()
+            # Using basic save from form for now as it maps 1:1 to model, 
+            # but we could extract data and use Service if logic was complex.
+            # Ideally: TaskService.create_task(**form.cleaned_data)
+            # Keeping form.save() for basic CRUD is standard Django, 
+            # but to fully respect "Layer Separation", we do:
+            TaskService.create_task(
+                title=form.cleaned_data['title'],
+                description=form.cleaned_data['description'],
+                completed=form.cleaned_data['completed'],
+                category_id=form.cleaned_data['category'].id if form.cleaned_data['category'] else None
+            )
             return redirect('../')
     else:
         form = TaskForm()
@@ -44,18 +55,18 @@ def task_create(request):
 
 @login_required
 def task_delete(request, id):
-    task = Task.objects.get(id=id)
-    task.delete()
+    TaskService.delete_task(id)
     return redirect('../')
 
 
 @login_required
 def task_update(request, id):
-    task = Task.objects.get(id=id)
+    task = TaskService.get_task_by_id(id)
     if request.method == 'POST':
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
-            form.save()
+            # form.save() usually does the job, but delegating to service:
+            TaskService.update_task(id, form.cleaned_data)
             return redirect('../')
     else:
         form = TaskForm(instance=task)
