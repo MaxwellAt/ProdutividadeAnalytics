@@ -1,60 +1,70 @@
-# ProdutividadeAnalytics
+# 📊 ProdutividadeAnalytics
 
-Sistema de Gestão e Análise de Dados de Produtividade.
+Plataforma de **Quantified Self** para gestão e análise de produtividade pessoal. Transforme logs de tempo brutos em insights acionáveis através de dashboards modernos e classificação inteligente.
 
-## Funcionalidades
+![badge](https://img.shields.io/badge/Status-Completed-success) ![badge](https://img.shields.io/badge/Python-3.10+-blue) ![badge](https://img.shields.io/badge/Django-4.0+-green) ![badge](https://img.shields.io/badge/Docker-Ready-blue)
 
-As principais funcionalidades deste aplicativo são:
+## ✨ Funcionalidades
 
-- Adicionar uma nova tarefa;
-- Editar uma tarefa existente;
-- Remover uma tarefa;
-- Visualizar todas as tarefas cadastradas.
-- Gerar estatísticas de produtividade (via análise em dados).
+### 📈 Painel de Controle (Dashboard)
+- **KPIs em Tempo Real**: Total de horas focadas, categorias dominantes e média diária.
+- **Visualização Rica**: Gráficos interativos (Plotly) para tendências semanais, distribuição por fonte e categorias.
+- **Design Moderno**: Interface "Midnight Blue" com efeitos Glassmorphism.
 
-## Como utilizar
+### 🧠 Inteligência de Dados
+- **Ingestão de CSV**: Importe dados de ferramentas como Toggl, RescueTime ou Clockify.
+- **Auto-Classificação**: Motor de regras (Regex/Keywords) que categoriza automaticamente atividades novas com base na descrição.
+- **Dimensões**: Análise por Categoria, Fonte e Projetos.
 
-Para utilizar este aplicativo, siga os passos abaixo:
+### 🛠️ Gestão de Tarefas
+- CRUD completo de tarefas diárias.
+- Associação de tarefas a categorias de produtividade.
 
-1. Clone este repositório em seu computador:
->git clone https://github.com/MaxwellAt/ProdutividadeAnalytics.git
+## 🚀 Como Rodar
 
-2. Acesse a pasta do projeto:
->cd ProdutividadeAnalytics
+### Opção 1: Docker (Recomendado)
+Ambiente completo isolado com Banco de Dados PostgreSQL e Adminer.
 
-3. Instale as dependências:
->pip install -r requeriments.txt
+```bash
+# 1. Subir os containers
+docker-compose up -d --build
 
-### Configuração automatizada do ambiente
+# 2. Acessar a aplicação
+# Web: http://localhost:8000
+# Adminer (DB GUI): http://localhost:8080
+```
 
-Se preferir, use o script de setup:
+### Opção 2: Instalação Manual
+```bash
+# 1. Criar ambiente virtual e instalar dependências
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 
->chmod +x scripts/setup_env.sh
->./scripts/setup_env.sh
+# 2. Configurar variáveis de ambiente (Opte por copiar o .env.example)
+# Certifique-se de configurar o DATABASE_URL se não for usar SQLite
 
-4. Crie o banco de dados:
->python manage.py migrate
+# 3. Executar migrações
+python manage.py makemigrations
+python manage.py migrate
 
-5. Inicie o servidor:
->python manage.py runserver
+# 4. Iniciar servidor
+python manage.py runserver
+```
 
+### 📚 Guia de Uso
 
-6. Acesse o aplicativo no seu navegador, através do endereço http://localhost:8000/.
+- **Admin**: Acesse `/admin` para criar Categorias e Regras de Classificação.
+- **Importação**: Use a aba "Importar CSV" para carregar seus dados históricos.
 
-## Análise de produtividade
+## 🛠️ Tecnologias Utilizadas
+- **Backend / Web**: Django, Gunicorn, WhiteNoise
+- **Data Science**: Pandas, Plotly (Visualização)
+- **Frontend**: Bootstrap 5, Custom CSS (Glassmorphism)
+- **Infraestrutura**: Docker, Docker Compose, PostgreSQL
 
-Para gerar estatísticas a partir das tarefas cadastradas:
-
->python analise_produtividade.py
-
-## Tecnologias utilizadas
-
-Este projeto foi desenvolvido com as seguintes tecnologias:
-
-- Python
-- Django
-- HTML
-- Pandas
+---
+MaxwellAt © 2026
 
 ##
 <div align="center">

@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row mb-4 align-items-center">
+    <div class="col-md-12">
+        <h1 class="display-5 fw-bold"><i class="fas fa-satellite-dish me-2"></i>Painel Quantified Self</h1>
+        <p class="text-muted">Métricas em tempo real dos seus logs (Tarefas, WakaTime, Agenda).</p>
+    </div>
+</div>
+
+<!-- KPIs Cards -->
+{% if kpis %}
+<div class="row mb-4">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Total Horas Foco</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ kpis.total_hours }}h</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-clock fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Pontuação de Foco</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ kpis.focus_score }}%</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-brain fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tarefas Concluídas
+                        </div>
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ kpis.completed_tasks }}/{{ kpis.total_tasks }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-clipboard-check fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Horas Produtivas</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ kpis.prod_hours }}h</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-battery-full fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if chart_daily %}
+<!-- Charts Row 1 -->
+<div class="row">
+    <div class="col-lg-8 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Foco Diário & Distrações</h6>
+            </div>
+            <div class="card-body">
+                <div id="chart-daily" style="height: 400px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Tendência de Tarefas</h6>
+            </div>
+            <div class="card-body">
+                 <div id="chart-trend" style="height: 400px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Row 2 -->
+<div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Distribuição por Categoria</h6>
+            </div>
+            <div class="card-body">
+                <div id="chart-pie" style="height: 350px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Fontes de Dados (Integrações)</h6>
+            </div>
+            <div class="card-body">
+                <div id="chart-source" style="height: 350px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+    var config = {responsive: true};
+    
+    // Render Charts
+    Plotly.newPlot('chart-daily', {{ chart_daily|safe }}.data, {{ chart_daily|safe }}.layout, config);
+    Plotly.newPlot('chart-pie', {{ chart_pie|safe }}.data, {{ chart_pie|safe }}.layout, config);
+    
+    {% if chart_source %}
+    Plotly.newPlot('chart-source', {{ chart_source|safe }}.data, {{ chart_source|safe }}.layout, config);
+    {% endif %}
+
+    {% if chart_trend %}
+    Plotly.newPlot('chart-trend', {{ chart_trend|safe }}.data, {{ chart_trend|safe }}.layout, config);
+    {% endif %}
+</script>
+{% else %}
+<div class="alert alert-warning text-center p-5">
+    <h4 class="alert-heading">Nenhum Dado Disponível!</h4>
+    <p>Não encontramos dados analíticos para exibir.</p>
+    <hr>
+    <p class="mb-0">Por favor, execute o pipeline ETL para gerar ou ingerir dados:</p>
+    <code>python manage.py run_etl</code>
+</div>
+{% endif %}
+{% endblock %}

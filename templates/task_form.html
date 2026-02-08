@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center animate-fade-in">
+    <div class="col-lg-8">
+        <!-- Header -->
+        <div class="mb-4 d-flex align-items-center justify-content-between">
+            <div>
+                <h1 class="h3 mb-0 text-gray-800">
+                    {% if form.instance.id %}Editar Tarefa{% else %}Nova Tarefa{% endif %}
+                </h1>
+                <p class="text-muted">Preencha os detalhes abaixo para rastrear sua atividade.</p>
+            </div>
+            <a href="{% url 'taskList' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Voltar para Lista
+            </a>
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <form method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                        <div class="alert alert-danger mb-4">
+                            Por favor corrija os erros abaixo.
+                        </div>
+                    {% endif %}
+
+                    <div class="mb-4">
+                        <label for="{{ form.title.id_for_label }}" class="form-label fw-bold">Título da Tarefa</label>
+                        {{ form.title }}
+                        <div class="form-text">O que precisa ser feito? Seja conciso.</div>
+                        {% if form.title.errors %}
+                            <div class="text-danger small mt-1">{{ form.title.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label for="{{ form.category.id_for_label }}" class="form-label fw-bold">Categoria</label>
+                            {{ form.category }}
+                            {% if form.category.errors %}
+                                <div class="text-danger small mt-1">{{ form.category.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                             <label for="{{ form.completed.id_for_label }}" class="form-label fw-bold">Status</label>
+                             <div class="form-check form-switch mt-2">
+                                {{ form.completed }}
+                                <label class="form-check-label" for="{{ form.completed.id_for_label }}">
+                                    Marcar como Concluída
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.description.id_for_label }}" class="form-label fw-bold">Descrição</label>
+                        {{ form.description }}
+                        <div class="form-text">Adicione mais detalhes, links ou contexto.</div>
+                    </div>
+
+                    <hr class="my-4 border-secondary opacity-25">
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="{% url 'taskList' %}" class="btn btn-secondary">Cancelar</a>
+                        <button class="btn btn-primary px-4" type="submit">
+                            <i class="fas fa-save me-2"></i>Salvar Tarefa
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Style Django generated inputs
+    document.addEventListener("DOMContentLoaded", function() {
+        var inputs = document.querySelectorAll('input[type="text"], textarea, select');
+        inputs.forEach(function(input) {
+            input.classList.add('form-control');
+            if (input.type === 'checkbox') {
+                input.classList.remove('form-control');
+                input.classList.add('form-check-input');
+            }
+        });
+        
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(function(box) {
+             box.classList.add('form-check-input');
+             box.classList.remove('form-control');
+        });
+    });
+</script>
+{% endblock %}
