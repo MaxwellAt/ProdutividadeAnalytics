@@ -10,17 +10,14 @@ Este projeto demonstra arquitetura modular em Django, separação de camadas de 
 
 ---
 
-<<<<<<< HEAD
-
-- **Views / ViewSets**: Camada de Interface (HTTP/HTML/JSON).
-- **Services**: Camada de Lógica de Negócios (Ex: `TaskService`, `AnalyticsService`).
-- **Models**: Camada de Dados e Definições de Schema.
-- **API (DRF)**: Exposição RESTful independente para consumo externo.
-=======
 ## 🏗️ Arquitetura de Software
 
 O projeto segue padrões de **Clean Architecture** adaptados ao Django, evitando o anti-padrão de "Fat Models/Views".
->>>>>>> bb9a095 (docs: atualização do README.md com melhorias na descrição da API e estrutura do projeto)
+
+- **Views / ViewSets**: Camada de Interface (HTTP/HTML/JSON). **Não contém regras de negócio.**
+- **Services**: Camada de Lógica de Negócios (Ex: `TaskService`, `AnalyticsService`). É aqui que a mágica acontece.
+- **Models**: Camada de Dados e Definições de Schema.
+- **API (DRF)**: Exposição RESTful independente para consumo externo.
 
 ### 1. **Service Layer** (Regra de Negócio Pura)
 A lógica não vive nas Views nem nos Models, mas em serviços testáveis e desacoplados.
