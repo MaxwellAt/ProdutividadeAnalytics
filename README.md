@@ -2,7 +2,39 @@
 
 Plataforma de **Quantified Self** para gestão e análise de produtividade pessoal. Transforme logs de tempo brutos em insights acionáveis, agora com uma **API Restful** completa.
 
-![CI Status](https://github.com/MaxwellAt/ProdutividadeAnalytics/actions/workflows/ci.yml/badge.svg) ![badge](https://img.shields.io/badge/Python-3.10+-blue) ![badge](https://img.shields.io/badge/Django-Full_Stack-green) ![badge](https://img.shields.io/badge/API-Restful-orange)
+![CI Status](https://github.com/MaxwellAt/ProdutividadeAnalytics/actions/workflows/ci.yml/badge.svg) ![Coverage](https://img.shields.io/badge/Coverage-92%25-green) ![badge](https://img.shields.io/badge/Python-3.10+-blue) ![badge](https://img.shields.io/badge/Django-Full_Stack-green)
+
+## ✨ Arquitetura do Sistema
+
+Seguindo padrões de mercado Enterprise/Clean Architecture:
+
+- **Views / ViewSets**: Camada de Interface (HTTP/HTML/JSON). **Não contém regras de negócio.**
+- **Services**: Camada de Lógica de Negócios (Ex: `TaskService`, `AnalyticsService`). É aqui que a mágica acontece.
+- **Models**: Camada de Dados e Definições de Schema.
+- **API (DRF)**: Exposição RESTful independente para consumo externo.
+
+## 🌐 API Restful (JSON Puro)
+
+Endpoints isolados para integração com Mobile/Frontend SPA:
+
+### 1. Analytics & KPIs
+`GET /api/v1/analytics/`
+Retorna estatísticas computadas em tempo real.
+```json
+{
+  "total_tasks": 24,
+  "completed_tasks": 18,
+  "completion_rate": 75.0,
+  "total_hours": 12.5,
+  "focus_score": 82
+}
+```
+
+### 2. Recursos (CRUD)
+- `GET/POST /api/v1/tasks/`
+- `GET/POST /api/v1/activities/`
+
+---
 
 ## ✨ Funcionalidades
 
